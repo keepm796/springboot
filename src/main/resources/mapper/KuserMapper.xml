@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.dao.KuserDao">
+    <select id="query" resultType="map">
+        select *
+        from kkb.kuser
+    </select>
+    <select id="queryKuserByKname" parameterType="string" resultType="com.aaa.vo.Kuser">
+        select *
+        from kkb.kuser
+        where kname = #{kname}
+    </select>
+    <select id="queryById" parameterType="int" resultType="com.aaa.vo.Kuser">
+        select *
+        from kkb.kuser
+        where kno = #{kno}
+    </select>
+    <insert id="save" parameterType="com.aaa.vo.Kuser">
+        insert into kkb.kuser (kname,kpassword) values (#{kname},#{kpassword})
+    </insert>
+    <update id="update" parameterType="com.aaa.vo.Kuser">
+        update kkb.kuser set kname=#{kname},kpassword=#{kpassword} where kno=#{kno}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        delete from kkb.kuser where kno=#{kno}
+    </delete>
+
+    <select id="selectByParams" resultType="com.aaa.vo.Kuser" parameterType="com.aaa.query.KUserQuery">
+        select *
+        from kkb.kuser
+        <where>
+            <if test="kname != null and kname != '' ">
+              and kname like concat('%',#{kname},'%')
+            </if>
+        </where>
+    </select>
+</mapper>
